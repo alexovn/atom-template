@@ -1,0 +1,48 @@
+{
+  "name": "gulp_atom",
+  "version": "1.0.0",
+  "description": "core for developing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alexovn",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.2",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.26.14",
+    "cssnano": "^5.0.1",
+    "del": "^6.0.0",
+    "fs": "*",
+    "gulp": "^4.0.2",
+    "gulp-file-include": "^2.3.0",
+    "gulp-fonter": "github:alexovn/gulp-fonter",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-notify": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^9.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-ttf2woff": "^1.1.1",
+    "gulp-ttf2woff2": "^4.0.1",
+    "gulp-uglify-es": "^2.0.0",
+    "gulp-webp-in-html": "^1.0.1",
+    "gulp-webpcss": "^1.1.1",
+    "imagemin-webp": "^6.0.0",
+    "node-sass": "^5.0.0",
+    "webp-converter": "^2.2.3",
+    "webpack": "^5.36.1",
+    "webpack-stream": "^6.1.2"
+  },
+  "browserslist": [
+    "last 5 version",
+    "> 1%",
+    "not dead",
+    "IE 10"
+  ]
+}

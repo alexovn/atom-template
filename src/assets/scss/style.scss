@@ -1,0 +1,20 @@
+//=======================Styles========================//
+
+// Main
+
+@import './main/reset'; // reset styles
+
+@import './main/vars'; // colors, default font, grid and media queries
+
+@import './main/mixins'; // custom mixins
+
+@import './main/fonts'; // fonts
+
+@import './main/main'; // common page styles
+
+// Partials
+
+@import './partials/header';
+@import './partials/footer';
+
+//=======================Styles========================//

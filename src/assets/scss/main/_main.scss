@@ -1,0 +1,51 @@
+//================================Primary style=================================
+body {
+    // min-width: 320px;
+    overflow-x: hidden;
+
+    font-family: $fontFamily, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+}
+
+body.lock {
+    overflow: hidden;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    display: block;
+}
+
+footer {
+    flex-shrink: 0;
+}
+//================================Primary style=================================
+
+//================================Modules=======================================
+
+
+//================================Modules=======================================
+
+//=================================Wrapper=======================================
+.wrapper {
+    overflow-x: hidden;
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.page {
+    flex: 1 0 auto;
+}
+//=================================Wrapper=======================================
+
+// [Grid layout]
+.container {
+
+}
+// [Grid layout]
