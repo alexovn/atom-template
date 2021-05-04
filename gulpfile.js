@@ -22,7 +22,6 @@ const imagemin = require("gulp-imagemin");
 const ttf2woff = require("gulp-ttf2woff");
 const ttf2woff2 = require("gulp-ttf2woff2");
 const fonter = require("gulp-fonter");
-const notify = require("gulp-notify");
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
 
@@ -80,15 +79,7 @@ function html() {
 
 function css() {
     return src(path.src.css, {base: srcPath + "assets/scss/"})
-        .pipe(plumber({
-            errorHandler : function(err) {
-                notify.onError({
-                    title:    "SCSS Error",
-                    message:  "Error: <%= error.message %>"
-                })(err);
-                this.emit('end');
-            }
-        }))
+        .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass({
             outputStyle: "expanded"
@@ -111,15 +102,7 @@ function css() {
 
 function js() {
     return src(path.src.js, {base: srcPath + "assets/js/"})
-        .pipe(plumber({
-            errorHandler: function(err) {
-                notify.onError({
-                    title:     "JS Error",
-                    message:   "Error: <%= error.message %>"
-                })(err);
-                this.emit("end");
-            }
-        }))
+        .pipe(plumber())
         .pipe(webpackStream({
             mode: "production",
             optimization: {
@@ -135,7 +118,7 @@ function js() {
                   exclude: /(node_modules)/,
                   loader: 'babel-loader',
                   query: {
-                    presets: ['env']
+                    presets: ['@babel/preset-env'],
                   }
                 }
               ]
