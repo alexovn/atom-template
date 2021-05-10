@@ -15,6 +15,7 @@
     "babel-loader": "^8.2.2",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.14",
+    "css-loader": "^5.2.4",
     "cssnano": "^5.0.1",
     "del": "^6.0.0",
     "fs": "*",
@@ -35,6 +36,9 @@
     "gulp-webpcss": "^1.1.1",
     "imagemin-webp": "^6.0.0",
     "node-sass": "^5.0.0",
+    "rfs": "^9.0.3",
+    "style-loader": "^2.0.0",
+    "uninstall": "*",
     "webp-converter": "^2.2.3",
     "webpack": "^5.36.1",
     "webpack-stream": "^6.1.2"
@@ -44,5 +48,8 @@
     "> 1%",
     "not dead",
     "IE 10"
-  ]
+  ],
+  "dependencies": {
+    "swiper": "^6.5.9"
+  }
 }
