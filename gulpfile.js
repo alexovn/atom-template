@@ -24,6 +24,7 @@ const ttf2woff2 = require("gulp-ttf2woff2");
 const fonter = require("gulp-fonter");
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
+const webpackConfig = require("./webpack.config.js");
 
 sass.compiler = require("node-sass")
 
@@ -64,7 +65,7 @@ function browsersync() {
             baseDir: "./" + distPath
         },
         notify: false,
-        port: 3000,
+        port: 5000,
     });
 }
 
@@ -103,27 +104,7 @@ function css() {
 function js() {
     return src(path.src.js, {base: srcPath + "assets/js/"})
         .pipe(plumber())
-        .pipe(webpackStream({
-            mode: "production",
-            optimization: {
-                minimize: false,
-            },
-            output: {
-              filename: 'app.js',
-            },
-            module: {
-              rules: [
-                {
-                  test: /\.(js)$/,
-                  exclude: /(node_modules)/,
-                  loader: 'babel-loader',
-                  query: {
-                    presets: ['@babel/preset-env'],
-                  }
-                }
-              ]
-            }
-          }))
+        .pipe(webpackStream(webpackConfig), webpack)
         .pipe(dest(path.build.js))
         .pipe(uglify())
         .pipe(rename({
