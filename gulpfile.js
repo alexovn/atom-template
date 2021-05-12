@@ -39,14 +39,14 @@ const path = {
         js:     distPath + "assets/js/",
         css:    distPath + "assets/css/",
         images: distPath + "assets/images/",
-        fonts:  distPath + "assets/fonts/"
+        fonts:  distPath + "assets/fonts/",
     },
     src: {
         html:   srcPath + "*.html",
         js:     srcPath + "assets/js/**/*.js",
         css:    srcPath + "assets/scss/*.scss",
         images: srcPath + "assets/images/**/*.{jpg,png,svg,gif,ico,webp}",
-        fonts:  srcPath + "assets/fonts/*.ttf"
+        fonts:  srcPath + "assets/fonts/*.ttf",
     },
     watch: {
         html:   srcPath + "**/*.html",
@@ -163,6 +163,11 @@ function fonts_otf () {
         .pipe(dest("./" + srcPath + "/assets/fonts/"))
 }
 
+function icons () {
+    return src("node_modules/@fortawesome/fontawesome-free/webfonts/*")
+        .pipe(dest(path.build.fonts))
+}
+
 function fontstyle() {
 	let file_content = fs.readFileSync(srcPath + "assets/scss/main/_fonts.scss");
 	if (file_content == "") {
@@ -182,6 +187,26 @@ function fontstyle() {
 		})
 	}
 }
+
+function vendorJS() {
+    const modules = [
+      'node_modules/swiper/swiper-bundle.min.js',
+      'node_modules/swiper/swiper-bundle.min.js.map',
+    ];
+  
+    return src(modules)
+      .pipe(dest(path.build.js))
+}
+  
+  function vendorCSS() {
+    const modules = [
+      'node_modules/swiper/swiper-bundle.min.css',
+    ];
+  
+    return src(modules)
+      .pipe(dest(path.build.css))
+}
+
 function cb() { }
 
 function clean() {
@@ -195,7 +220,7 @@ function watchFiles() {
     gulp.watch([path.watch.images], images);
 }
 
-const build = gulp.series(clean, fonts_otf, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
+const build = gulp.series(clean, fonts_otf, vendorJS, vendorCSS, icons, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
 const watch = gulp.parallel(build, watchFiles, browsersync);
 
 /* Export Tasks */
@@ -204,6 +229,9 @@ exports.css = css;
 exports.js = js;
 exports.fonts_otf = fonts_otf;
 exports.fontstyle = fontstyle;
+exports.icons = icons;
+exports.vendorJS = vendorJS;
+exports.vendorCSS = vendorCSS;
 exports.fonts = fonts;
 exports.images = images;
 exports.clean = clean;

@@ -9,14 +9,14 @@
   "author": "alexovn",
   "license": "ISC",
   "devDependencies": {
-    "@babel/preset-env": "^7.14.0",
+    "@babel/preset-env": "^7.14.1",
     "autoprefixer": "^10.2.5",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.14",
     "css-loader": "^5.2.4",
-    "cssnano": "^5.0.1",
+    "cssnano": "^5.0.2",
     "del": "^6.0.0",
     "fs": "*",
     "gulp": "^4.0.2",
@@ -35,12 +35,12 @@
     "gulp-webp-in-html": "^1.0.1",
     "gulp-webpcss": "^1.1.1",
     "imagemin-webp": "^6.0.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.0",
     "rfs": "^9.0.3",
     "style-loader": "^2.0.0",
     "uninstall": "*",
     "webp-converter": "^2.2.3",
-    "webpack": "^5.36.1",
+    "webpack": "^5.37.0",
     "webpack-stream": "^6.1.2"
   },
   "browserslist": [
@@ -50,6 +50,7 @@
     "IE 10"
   ],
   "dependencies": {
-    "swiper": "^6.5.9"
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "swiper": "^6.6.1"
   }
 }
