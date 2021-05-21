@@ -1,26 +1,57 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
+
 module.exports = {
     mode: "production",
+    devtool: 'source-map',
     optimization: {
-        minimize: false,
+        splitChunks: {
+            cacheGroups: {
+                vendorJS: {
+                    name: 'vendor',
+                    test: /[\\/]node_modules[\\/]|plugins[\\/]/,
+                    chunks: 'all',
+                    enforce: true,
+                },
+                vendorCSS: {
+                    name: 'vendor',
+                    type: 'css/mini-extract',
+                    chunks: 'all',
+                    enforce: true,
+                  },
+            }
+        },
+        minimizer: [
+            new TerserPlugin(),
+            new CssMinimizerPlugin(),
+        ]
     },
     output: {
-        filename: 'app.js',
+        filename: '[name].bundle.js',
+        chunkFilename: '[name].bundle.js',
     },
     module: {
         rules: [
             {
                 test: /\.(js)$/,
                 exclude: /(node_modules)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['@babel/preset-env'],
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                    }
                 }
             },
-
             {
-                test: /\.(css)$/,
-                use: ['style-loader', 'css-loader'],
-            },
+                test: /\.(sa|sc|c)ss$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+            }
         ]
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: "../css/[name].min.css",
+        })
+    ],
 };

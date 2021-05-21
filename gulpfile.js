@@ -16,12 +16,12 @@ const sourcemaps = require("gulp-sourcemaps");
 const cssnano = require("cssnano");
 const rename = require("gulp-rename");
 const del = require("del");
-const uglify = require("gulp-uglify-es").default;
 const newer = require("gulp-newer");
 const imagemin = require("gulp-imagemin");
 const ttf2woff = require("gulp-ttf2woff");
 const ttf2woff2 = require("gulp-ttf2woff2");
 const fonter = require("gulp-fonter");
+
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
 const webpackConfig = require("./webpack.config.js");
@@ -104,9 +104,7 @@ function css() {
 function js() {
     return src(path.src.js, {base: srcPath + "assets/js/"})
         .pipe(plumber())
-        .pipe(webpackStream(webpackConfig), webpack)
-        .pipe(dest(path.build.js))
-        .pipe(uglify())
+        .pipe(webpackStream(webpackConfig, webpack))
         .pipe(rename({
             suffix: ".min",
             extname: ".js"
@@ -188,25 +186,6 @@ function fontstyle() {
 	}
 }
 
-function vendorJS() {
-    const modules = [
-      'node_modules/swiper/swiper-bundle.min.js',
-      'node_modules/swiper/swiper-bundle.min.js.map',
-    ];
-  
-    return src(modules)
-      .pipe(dest(path.build.js))
-}
-  
-  function vendorCSS() {
-    const modules = [
-      'node_modules/swiper/swiper-bundle.min.css',
-    ];
-  
-    return src(modules)
-      .pipe(dest(path.build.css))
-}
-
 function cb() { }
 
 function clean() {
@@ -220,7 +199,7 @@ function watchFiles() {
     gulp.watch([path.watch.images], images);
 }
 
-const build = gulp.series(clean, fonts_otf, vendorJS, vendorCSS, icons, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
+const build = gulp.series(clean, fonts_otf, icons, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
 const watch = gulp.parallel(build, watchFiles, browsersync);
 
 /* Export Tasks */
@@ -230,8 +209,6 @@ exports.js = js;
 exports.fonts_otf = fonts_otf;
 exports.fontstyle = fontstyle;
 exports.icons = icons;
-exports.vendorJS = vendorJS;
-exports.vendorCSS = vendorCSS;
 exports.fonts = fonts;
 exports.images = images;
 exports.clean = clean;
