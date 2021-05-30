@@ -14,6 +14,7 @@ const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const sourcemaps = require("gulp-sourcemaps");
 const cssnano = require("cssnano");
+const concatCSS = require("gulp-concat-css");
 const rename = require("gulp-rename");
 const del = require("del");
 const newer = require("gulp-newer");
@@ -105,10 +106,6 @@ function js() {
     return src(path.src.js, {base: srcPath + "assets/js/"})
         .pipe(plumber())
         .pipe(webpackStream(webpackConfig, webpack))
-        .pipe(rename({
-            suffix: ".min",
-            extname: ".js"
-        }))
         .pipe(dest(path.build.js))
         .pipe(browserSync.stream())
 }

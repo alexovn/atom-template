@@ -28,8 +28,8 @@ module.exports = {
         ]
     },
     output: {
-        filename: '[name].bundle.js',
-        chunkFilename: '[name].bundle.js',
+        filename: '[name].bundle.min.js',
+        chunkFilename: '[name].bundle.min.js',
     },
     module: {
         rules: [
