@@ -41,6 +41,7 @@ const path = {
         css:    distPath + "assets/css/",
         images: distPath + "assets/images/",
         fonts:  distPath + "assets/fonts/",
+        webfonts:  distPath + "assets/fonts/webfonts",
     },
     src: {
         html:   srcPath + "*.html",
@@ -160,7 +161,7 @@ function fonts_otf () {
 
 function icons () {
     return src("node_modules/@fortawesome/fontawesome-free/webfonts/*")
-        .pipe(dest(path.build.fonts))
+        .pipe(dest(path.build.webfonts))
 }
 
 function fontstyle() {
