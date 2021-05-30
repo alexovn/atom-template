@@ -2,7 +2,14 @@
 
 // Main
 
-@import './main/reset'; // reset styles
+// @import './main/reset'; // reset styles
+
+//Sanitize CSS (reset default browswer styles)============
+@import '../../../node_modules/sanitize.css/sanitize';
+@import '../../../node_modules/sanitize.css/forms';
+@import '../../../node_modules/sanitize.css/typography';
+//Sanitize CSS (reset default browswer styles)============
+
 
 @import './main/vars'; // colors, default font, grid and media queries
 
