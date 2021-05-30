@@ -36,11 +36,11 @@ const distPath = "dist/";
 
 const path = {
     build: {
-        html:   distPath,
-        js:     distPath + "assets/js/",
-        css:    distPath + "assets/css/",
-        images: distPath + "assets/images/",
-        fonts:  distPath + "assets/fonts/",
+        html:      distPath,
+        js:        distPath + "assets/js/",
+        css:       distPath + "assets/css/",
+        images:    distPath + "assets/images/",
+        fonts:     distPath + "assets/fonts/",
         webfonts:  distPath + "assets/fonts/webfonts",
     },
     src: {
