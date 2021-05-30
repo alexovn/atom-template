@@ -159,10 +159,10 @@ function fonts_otf () {
         .pipe(dest("./" + srcPath + "/assets/fonts/"))
 }
 
-function icons () {
-    return src("node_modules/@fortawesome/fontawesome-free/webfonts/*")
-        .pipe(dest(path.build.webfonts))
-}
+// function icons () {
+//     return src("node_modules/@fortawesome/fontawesome-free/webfonts/*")
+//         .pipe(dest(path.build.webfonts))
+// }
 
 function fontstyle() {
 	let file_content = fs.readFileSync(srcPath + "assets/scss/main/_fonts.scss");
@@ -197,7 +197,7 @@ function watchFiles() {
     gulp.watch([path.watch.images], images);
 }
 
-const build = gulp.series(clean, fonts_otf, icons, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
+const build = gulp.series(clean, fonts_otf, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
 const watch = gulp.parallel(build, watchFiles, browsersync);
 
 /* Export Tasks */
@@ -206,7 +206,7 @@ exports.css = css;
 exports.js = js;
 exports.fonts_otf = fonts_otf;
 exports.fontstyle = fontstyle;
-exports.icons = icons;
+// exports.icons = icons;
 exports.fonts = fonts;
 exports.images = images;
 exports.clean = clean;

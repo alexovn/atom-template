@@ -19,6 +19,7 @@
     "css-minimizer-webpack-plugin": "^3.0.0",
     "cssnano": "^5.0.2",
     "del": "^6.0.0",
+    "file-loader": "^6.2.0",
     "fs": "*",
     "gulp": "^4.0.2",
     "gulp-concat-css": "^3.1.0",

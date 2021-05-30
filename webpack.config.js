@@ -19,7 +19,7 @@ module.exports = {
                     type: 'css/mini-extract',
                     chunks: 'all',
                     enforce: true,
-                  },
+                },
             }
         },
         minimizer: [
@@ -46,7 +46,17 @@ module.exports = {
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-            }
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|)$/i,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: "[name].[ext]",
+                        outputPath: "../fonts/webfonts", 
+                        }
+                }
+            },
         ]
     },
     plugins: [
