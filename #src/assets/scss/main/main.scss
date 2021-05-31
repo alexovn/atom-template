@@ -1,0 +1,50 @@
+//Primary style=================================
+body {
+    color: #000;
+    min-height: 100%;;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+footer {
+    flex-shrink: 0;
+}
+//Primary style=================================
+
+//Modules=======================================
+
+
+//Modules=======================================
+
+//Wrapper=======================================
+.wrapper {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+//Wrappers=======================================
+
+//Main Block===================================
+.page {
+    flex: 1 0 auto;
+}
+//Main Block===================================
+
+//Main Grid==================================
+.container {
+    max-width: $maxWidthContainer + px;
+    margin: 0 auto;
+    @media (max-width: $md1+px) {
+		max-width: 970px;
+	}
+	@media (max-width: $md2+px) {
+		max-width: 750px;
+	}
+	@media (max-width: $md3+px) {
+		max-width: none;
+		padding: 0 10px;
+	}
+}
+//Mian Grid==================================
