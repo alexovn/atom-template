@@ -23,7 +23,14 @@ module.exports = {
             }
         },
         minimizer: [
-            new TerserPlugin(),
+            new TerserPlugin({
+                terserOptions: {
+                    format: {
+                        comments: false,
+                    },
+                },
+                extractComments: false,
+            }),
             new CssMinimizerPlugin(),
         ]
     },
