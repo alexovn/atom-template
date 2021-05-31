@@ -31,7 +31,7 @@ sass.compiler = require("node-sass")
 
 /* Paths */
 
-const srcPath = "src/";
+const srcPath = "#src/";
 const distPath = "dist/";
 
 const path = {
@@ -41,7 +41,6 @@ const path = {
         css:       distPath + "assets/css/",
         images:    distPath + "assets/images/",
         fonts:     distPath + "assets/fonts/",
-        webfonts:  distPath + "assets/fonts/webfonts",
     },
     src: {
         html:   srcPath + "*.html",
@@ -64,7 +63,8 @@ const path = {
 function browsersync() {
     browserSync.init({
         server: {
-            baseDir: "./" + distPath
+            baseDir: "./" + distPath,
+            index: 'index.html',
         },
         notify: false,
         port: 5000,
