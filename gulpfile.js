@@ -7,14 +7,12 @@ const browserSync = require("browser-sync").create();
 const plumber = require("gulp-plumber");
 const fileinclude = require("gulp-file-include");
 const webphtml = require("gulp-webp-in-html");
-const webpcss = require("gulp-webpcss");
 const webp = require("imagemin-webp");
 const sass = require("gulp-sass");
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const sourcemaps = require("gulp-sourcemaps");
 const cssnano = require("cssnano");
-const concatCSS = require("gulp-concat-css");
 const rename = require("gulp-rename");
 const del = require("del");
 const newer = require("gulp-newer");
@@ -88,10 +86,6 @@ function css() {
             outputStyle: "expanded"
         }))
         .pipe(postcss([autoprefixer]))
-        .pipe(webpcss({
-            webpClass: "webp",
-            noWebpClass: ".no-webp"
-        }))
         .pipe(dest(path.build.css))
         .pipe(postcss([cssnano]))
         .pipe(rename({
@@ -159,11 +153,6 @@ function fonts_otf () {
         .pipe(dest("./" + srcPath + "/assets/fonts/"))
 }
 
-// function icons () {
-//     return src("node_modules/@fortawesome/fontawesome-free/webfonts/*")
-//         .pipe(dest(path.build.webfonts))
-// }
-
 function fontstyle() {
 	let file_content = fs.readFileSync(srcPath + "assets/scss/main/fonts.scss");
 	if (file_content == "") {
@@ -206,7 +195,6 @@ exports.css = css;
 exports.js = js;
 exports.fonts_otf = fonts_otf;
 exports.fontstyle = fontstyle;
-// exports.icons = icons;
 exports.fonts = fonts;
 exports.images = images;
 exports.clean = clean;

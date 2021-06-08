@@ -9,20 +9,19 @@
   "author": "alexovn",
   "license": "ISC",
   "devDependencies": {
-    "@babel/preset-env": "^7.14.1",
-    "autoprefixer": "^10.2.5",
+    "@babel/preset-env": "^7.14.4",
+    "autoprefixer": "^10.2.6",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.14",
-    "css-loader": "^5.2.4",
-    "css-minimizer-webpack-plugin": "^3.0.0",
-    "cssnano": "^5.0.2",
+    "css-loader": "^5.2.6",
+    "css-minimizer-webpack-plugin": "^3.0.1",
+    "cssnano": "^5.0.5",
     "del": "^6.0.0",
     "file-loader": "^6.2.0",
     "fs": "*",
     "gulp": "^4.0.2",
-    "gulp-concat-css": "^3.1.0",
     "gulp-file-include": "^2.3.0",
     "gulp-fonter": "github:alexovn/gulp-fonter",
     "gulp-imagemin": "^7.1.0",
@@ -35,17 +34,17 @@
     "gulp-ttf2woff": "^1.1.1",
     "gulp-ttf2woff2": "^4.0.1",
     "gulp-webp-in-html": "^1.0.1",
-    "gulp-webpcss": "^1.1.1",
     "html-loader": "^2.1.2",
     "imagemin-webp": "^6.0.0",
     "mini-css-extract-plugin": "^1.6.0",
+    "mixitup": "^3.3.1",
     "node-sass": "^6.0.0",
     "rfs": "^9.0.3",
-    "sass-loader": "^11.1.1",
+    "sass-loader": "^12.0.0",
     "style-loader": "^2.0.0",
     "uninstall": "*",
     "webp-converter": "^2.2.3",
-    "webpack": "^5.37.0",
+    "webpack": "^5.38.1",
     "webpack-stream": "^6.1.2"
   },
   "browserslist": [
@@ -56,9 +55,8 @@
   ],
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
-    "sanitize.css": "^12.0.1",
+    "glider-js": "^1.7.7",
     "scroll-lock": "^2.1.5",
-    "sweetalert2": "^11.0.8",
-    "swiper": "^6.6.1"
+    "swiper": "^6.7.0"
   }
 }
