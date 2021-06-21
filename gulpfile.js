@@ -20,6 +20,7 @@ const imagemin = require("gulp-imagemin");
 const ttf2woff = require("gulp-ttf2woff");
 const ttf2woff2 = require("gulp-ttf2woff2");
 const fonter = require("gulp-fonter");
+const concatCss = require('gulp-concat-css');
 
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
@@ -34,24 +35,26 @@ const distPath = "dist/";
 
 const path = {
     build: {
-        html:      distPath,
-        js:        distPath + "assets/js/",
-        css:       distPath + "assets/css/",
-        images:    distPath + "assets/images/",
-        fonts:     distPath + "assets/fonts/",
+        html:          distPath,
+        js:            distPath + "assets/js/",
+        css:           distPath + "assets/css/",
+        images:        distPath + "assets/images/",
+        fonts:         distPath + "assets/fonts/",
     },
     src: {
-        html:   srcPath + "*.html",
-        js:     srcPath + "assets/js/**/*.js",
-        css:    srcPath + "assets/scss/*.scss",
-        images: srcPath + "assets/images/**/*.{jpg,png,svg,gif,ico,webp}",
-        fonts:  srcPath + "assets/fonts/*.ttf",
+        html:          srcPath + "*.html",
+        js:            srcPath + "assets/js/**/*.js",
+        css:           srcPath + "assets/scss/*.scss",
+        images:        srcPath + "assets/images/**/*.{jpg,png,svg,gif,ico,webp}",
+        fonts:         srcPath + "assets/fonts/*.ttf",
+        vendor_styles: srcPath + "assets/vendor_styles/*.css",
     },
     watch: {
-        html:   srcPath + "**/*.html",
-        js:     srcPath + "assets/js/**/*.js",
-        css:    srcPath + "assets/scss/**/*.scss",
-        images: srcPath + "assets/images/**/*.{jpg,png,svg,gif,ico,webp}",
+        html:          srcPath + "**/*.html",
+        js:            srcPath + "assets/js/**/*.js",
+        css:           srcPath + "assets/scss/**/*.scss",
+        images:        srcPath + "assets/images/**/*.{jpg,png,svg,gif,ico,webp}",
+        vendor_styles: srcPath + "assets/vendor_styles/*.css",
     },
     clean: "./" + distPath
 };
@@ -95,6 +98,18 @@ function css() {
         .pipe(sourcemaps.write("."))
         .pipe(dest(path.build.css))
         .pipe(browserSync.stream());
+}
+
+function vendorCSS() {
+    return src(path.src.vendor_styles, {base: srcPath + "assets/vendor_styles/"})
+        .pipe(plumber())
+        .pipe(concatCss("vendor.bundle.css"))
+        .pipe(postcss([cssnano]))
+        .pipe(rename({
+            suffix: ".min",
+            extname: ".css"
+        }))
+        .pipe(dest(path.build.css))
 }
 
 function js() {
@@ -184,9 +199,10 @@ function watchFiles() {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.images], images);
+    gulp.watch([path.watch.vendor_styles], vendorCSS);
 }
 
-const build = gulp.series(clean, fonts_otf, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
+const build = gulp.series(clean, fonts_otf, vendorCSS, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
 const watch = gulp.parallel(build, watchFiles, browsersync);
 
 /* Export Tasks */
@@ -195,6 +211,7 @@ exports.css = css;
 exports.js = js;
 exports.fonts_otf = fonts_otf;
 exports.fontstyle = fontstyle;
+exports.vendorCSS = vendorCSS;
 exports.fonts = fonts;
 exports.images = images;
 exports.clean = clean;

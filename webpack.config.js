@@ -1,5 +1,4 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const webpack = require('webpack'); 
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
@@ -9,13 +8,7 @@ module.exports = {
             cacheGroups: {
                 vendorJS: {
                     name: 'vendor',
-                    test: /[\\/]node_modules[\\/]|plugins[\\/]/,
-                    chunks: 'all',
-                    enforce: true,
-                },
-                vendorCSS: {
-                    name: 'vendor',
-                    type: 'css/mini-extract',
+                    test: /[\\/]node_modules[\\/]|files[\\/]/,
                     chunks: 'all',
                     enforce: true,
                 },
@@ -30,7 +23,6 @@ module.exports = {
                 },
                 extractComments: false,
             }),
-            new CssMinimizerPlugin(),
         ]
     },
     output: {
@@ -50,10 +42,6 @@ module.exports = {
                 }
             },
             {
-                test: /\.(sa|sc|c)ss$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-            },
-            {
                 test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|)$/i,
                 use: {
                     loader: 'file-loader',
@@ -66,8 +54,9 @@ module.exports = {
         ]
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: "../css/[name].min.css",
-        })
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+        }),
     ],
 };
