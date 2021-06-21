@@ -1,7 +1,9 @@
 //Primary style=================================
 body {
+    min-height: 100%;
+    
     color: #000;
-    min-height: 100%;;
+    font-family: $fontFamily;
     font-weight: 400;
     font-size: 14px;
 }
@@ -24,7 +26,7 @@ footer {
     display: flex;
     flex-direction: column;
 }
-//Wrappers=======================================
+//Wrapper=======================================
 
 //Main Block===================================
 .page {
