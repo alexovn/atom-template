@@ -1,3 +1,3 @@
-# gulp_atom
+# gulp-atom-template
 
 Core for developing
