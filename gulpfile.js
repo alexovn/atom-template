@@ -16,6 +16,9 @@ const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const sourcemaps = require("gulp-sourcemaps");
 const cssnano = require("cssnano");
+const concatCss = require('gulp-concat-css');
+
+
 const rename = require("gulp-rename");
 const del = require("del");
 const newer = require("gulp-newer");
@@ -25,7 +28,6 @@ const ttf2woff = require("gulp-ttf2woff");
 const ttf2woff2 = require("gulp-ttf2woff2");
 const fonter = require("gulp-fonter");
 
-const concatCss = require('gulp-concat-css');
 
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
