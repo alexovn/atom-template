@@ -214,7 +214,7 @@ function watchFiles() {
     gulp.watch([path.watch.vendor_styles], vendorCSS);
 }
 
-const build = gulp.series(clean, fonts_otf, vendorCSS, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
+const build = gulp.series(clean, fonts_otf, fonts, gulp.parallel(html, css, vendorCSS, js, images, fontstyle));
 const watch = gulp.parallel(build, watchFiles, browsersync);
 
 /* Export Tasks */
