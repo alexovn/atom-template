@@ -1,5 +1,5 @@
 {
-  "name": "gulp_atom",
+  "name": "gulp-atom",
   "version": "1.0.0",
   "description": "core for developing",
   "main": "index.js",
@@ -9,17 +9,13 @@
   "author": "alexovn",
   "license": "ISC",
   "devDependencies": {
-    "@babel/preset-env": "^7.14.4",
+    "@babel/preset-env": "^7.14.7",
     "autoprefixer": "^10.2.6",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
-    "babel-preset-env": "^1.7.0",
-    "browser-sync": "^2.26.14",
-    "css-loader": "^5.2.6",
-    "css-minimizer-webpack-plugin": "^3.0.1",
-    "cssnano": "^5.0.5",
+    "browser-sync": "^2.27.4",
+    "cssnano": "^5.0.6",
     "del": "^6.0.0",
-    "file-loader": "^6.2.0",
     "fs": "*",
     "gulp": "^4.0.2",
     "gulp-concat-css": "^3.1.0",
@@ -30,36 +26,31 @@
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.0",
     "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-ttf2woff": "^1.1.1",
     "gulp-ttf2woff2": "^4.0.1",
     "gulp-webp-in-html": "^1.0.1",
     "imagemin-webp": "^6.0.0",
-    "mini-css-extract-plugin": "^1.6.0",
     "mixitup": "^3.3.1",
-    "node-sass": "^6.0.0",
-    "rfs": "^9.0.3",
-    "sass-loader": "^12.0.0",
-    "style-loader": "^2.0.0",
+    "sass": "^1.35.2",
     "uninstall": "*",
-    "webp-converter": "^2.2.3",
-    "webpack": "^5.38.1",
+    "webpack": "^5.44.0",
     "webpack-stream": "^6.1.2"
   },
   "browserslist": [
-    "last 5 version",
-    "> 1%",
-    "not dead",
-    "IE 10"
+    "defaults",
+    "last 5 versions"
   ],
   "dependencies": {
     "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "caniuse-lite": "^1.0.30001243",
     "glider-js": "^1.7.7",
     "jquery": "^3.6.0",
     "lazysizes": "^5.3.2",
+    "rfs": "^9.0.4",
     "scroll-lock": "^2.1.5",
-    "swiper": "^6.7.0"
+    "swiper": "^6.7.5"
   }
 }

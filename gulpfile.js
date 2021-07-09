@@ -1,14 +1,17 @@
 "use strict"
 
 const {src, dest} = require("gulp");
+
 const gulp = require("gulp");
 const fs = require("fs");
 const browserSync = require("browser-sync").create();
 const plumber = require("gulp-plumber");
 const fileinclude = require("gulp-file-include");
+
 const webphtml = require("gulp-webp-in-html");
 const webp = require("imagemin-webp");
-const sass = require("gulp-sass");
+
+const sass = require("gulp-sass")(require("sass"));
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const sourcemaps = require("gulp-sourcemaps");
@@ -17,16 +20,16 @@ const rename = require("gulp-rename");
 const del = require("del");
 const newer = require("gulp-newer");
 const imagemin = require("gulp-imagemin");
+
 const ttf2woff = require("gulp-ttf2woff");
 const ttf2woff2 = require("gulp-ttf2woff2");
 const fonter = require("gulp-fonter");
+
 const concatCss = require('gulp-concat-css');
 
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
 const webpackConfig = require("./webpack.config.js");
-
-sass.compiler = require("node-sass")
 
 /* Paths */
 
@@ -86,11 +89,13 @@ function css() {
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass({
+            errLogToConsole: true,
             outputStyle: "expanded"
         }))
-        .pipe(postcss([autoprefixer]))
+        .on("error", catchErr)
+        .pipe(postcss([autoprefixer()]))
         .pipe(dest(path.build.css))
-        .pipe(postcss([cssnano]))
+        .pipe(postcss([autoprefixer(),cssnano()]))
         .pipe(rename({
             suffix: ".min",
             extname: ".css"
@@ -100,11 +105,16 @@ function css() {
         .pipe(browserSync.stream());
 }
 
+function catchErr(e) {
+    console.log(e);
+    this.emit('end');
+}
+
 function vendorCSS() {
     return src(path.src.vendor_styles, {base: srcPath + "assets/vendor_styles/"})
         .pipe(plumber())
         .pipe(concatCss("vendor.bundle.css"))
-        .pipe(postcss([cssnano]))
+        .pipe(postcss([cssnano()]))
         .pipe(rename({
             suffix: ".min",
             extname: ".css"
