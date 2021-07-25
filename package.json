@@ -1,31 +1,38 @@
 {
-  "name": "gulp-atom",
+  "name": "gulp-atom-template",
   "version": "1.0.0",
   "description": "core for developing",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "gulp dev --env development",
+    "prod": "gulp prod --env production"
   },
   "author": "alexovn",
   "license": "ISC",
   "devDependencies": {
-    "@babel/preset-env": "^7.14.7",
-    "autoprefixer": "^10.2.6",
+    "@babel/preset-env": "^7.14.8",
+    "autoprefixer": "^10.3.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
     "browser-sync": "^2.27.4",
-    "cssnano": "^5.0.6",
+    "cssnano": "^5.0.7",
     "del": "^6.0.0",
     "fs": "*",
     "gulp": "^4.0.2",
     "gulp-concat-css": "^3.1.0",
+    "gulp-environments": "^1.0.1",
     "gulp-file-include": "^2.3.0",
     "gulp-fonter": "github:alexovn/gulp-fonter",
+    "gulp-hash-filename": "^3.0.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-newer": "^1.4.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.0",
     "gulp-rename": "^2.0.0",
+    "gulp-rev": "^9.0.0",
+    "gulp-rev-all": "^3.0.0",
+    "gulp-rev-dist-clean": "^3.1.0",
+    "gulp-rev-rewrite": "^4.0.0",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-ttf2woff": "^1.1.1",
@@ -33,9 +40,9 @@
     "gulp-webp-in-html": "^1.0.1",
     "imagemin-webp": "^6.0.0",
     "mixitup": "^3.3.1",
-    "sass": "^1.35.2",
+    "sass": "^1.36.0",
     "uninstall": "*",
-    "webpack": "^5.44.0",
+    "webpack": "^5.46.0",
     "webpack-stream": "^6.1.2"
   },
   "browserslist": [
@@ -45,12 +52,12 @@
   "dependencies": {
     "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/fontawesome-free": "^5.15.3",
-    "caniuse-lite": "^1.0.30001243",
+    "caniuse-lite": "^1.0.30001247",
     "glider-js": "^1.7.7",
     "jquery": "^3.6.0",
     "lazysizes": "^5.3.2",
     "rfs": "^9.0.4",
     "scroll-lock": "^2.1.5",
-    "swiper": "^6.7.5"
+    "swiper": "^6.8.0"
   }
 }

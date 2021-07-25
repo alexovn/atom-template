@@ -3,10 +3,19 @@
 const {src, dest} = require("gulp");
 
 const gulp = require("gulp");
+
+const environments = require('gulp-environments');
+const development = environments.development;
+const production = environments.production;
+
 const fs = require("fs");
 const browserSync = require("browser-sync").create();
 const plumber = require("gulp-plumber");
 const fileinclude = require("gulp-file-include");
+
+const RevAll = require("gulp-rev-all");
+const revRewrite = require('gulp-rev-rewrite');
+const revDistClean = require('gulp-rev-dist-clean');
 
 const webphtml = require("gulp-webp-in-html");
 const webp = require("imagemin-webp");
@@ -18,7 +27,6 @@ const sourcemaps = require("gulp-sourcemaps");
 const cssnano = require("cssnano");
 const concatCss = require('gulp-concat-css');
 
-
 const rename = require("gulp-rename");
 const del = require("del");
 const newer = require("gulp-newer");
@@ -27,7 +35,6 @@ const imagemin = require("gulp-imagemin");
 const ttf2woff = require("gulp-ttf2woff");
 const ttf2woff2 = require("gulp-ttf2woff2");
 const fonter = require("gulp-fonter");
-
 
 const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
@@ -74,6 +81,7 @@ function browsersync() {
         },
         notify: false,
         port: 5000,
+        open: false,
     });
 }
 
@@ -81,7 +89,7 @@ function html() {
     return src(path.src.html, {base: srcPath})
         .pipe(plumber())
         .pipe(fileinclude())
-        .pipe(webphtml())
+        .pipe(production(webphtml()))
         .pipe(dest(path.build.html))
         .pipe(browserSync.stream());
 }
@@ -89,22 +97,23 @@ function html() {
 function css() {
     return src(path.src.css, {base: srcPath + "assets/scss/"})
         .pipe(plumber())
-        .pipe(sourcemaps.init())
+        .pipe(development(sourcemaps.init()))
         .pipe(sass({
             errLogToConsole: true,
             outputStyle: "expanded"
         }))
         .on("error", catchErr)
-        .pipe(postcss([autoprefixer()]))
-        .pipe(dest(path.build.css))
-        .pipe(postcss([autoprefixer(),cssnano()]))
+        .pipe(production(postcss([autoprefixer()])))
+        .pipe(production(dest(path.build.css)))
+        .pipe(production(postcss([autoprefixer()])))
+        .pipe(postcss([cssnano()]))
         .pipe(rename({
             suffix: ".min",
             extname: ".css"
         }))
-        .pipe(sourcemaps.write("."))
+        .pipe(development(sourcemaps.write(".")))
         .pipe(dest(path.build.css))
-        .pipe(browserSync.stream());
+        .pipe(browserSync.stream())
 }
 
 function catchErr(e) {
@@ -134,19 +143,19 @@ function js() {
 
 function images () {
     return src(path.src.images)
-        .pipe(newer(path.build.images))
-        .pipe(imagemin([
+        .pipe(production(newer(path.build.images)))
+        .pipe(production(imagemin([
             webp({
                 quality: 75
             })
-        ]))
-        .pipe(rename({
+        ])))
+        .pipe(production(rename({
             extname: ".webp"
-        }))
-        .pipe(dest(path.build.images))
-        .pipe(src(path.src.images))
-        .pipe(newer(path.build.images))
-        .pipe(imagemin([
+        })))
+        .pipe(production(dest(path.build.images)))
+        .pipe(production(src(path.src.images)))
+        .pipe(production(newer(path.build.images)))
+        .pipe(production(imagemin([
             imagemin.gifsicle({interlaced: true}),
             imagemin.mozjpeg({quality: 95, progressive: true}),
             imagemin.optipng({optimizationLevel: 5}),
@@ -156,7 +165,7 @@ function images () {
                     { cleanupIDs: false }
                 ]
             })
-        ]))
+        ])))
         .pipe(dest(path.build.images))
 }
 
@@ -180,7 +189,7 @@ function fonts_otf () {
         .pipe(dest("./" + srcPath + "/assets/fonts/"))
 }
 
-function fontstyle() {
+function fontstyle(cb) {
 	let file_content = fs.readFileSync(srcPath + "assets/scss/main/fonts.scss");
 	if (file_content == "") {
 		fs.writeFile(srcPath + "assets/scss/main/fonts.scss", "", cb);
@@ -198,12 +207,32 @@ function fontstyle() {
 			}
 		})
 	}
+    cb()
 }
-
-function cb() { }
 
 function clean() {
     return del(path.clean);
+}
+
+function revision() {
+    return src('dist/assets/**/*.{css,js}')
+      .pipe(RevAll.revision())
+      .pipe(dest('dist/assets'))
+      .pipe(RevAll.manifestFile())
+      .pipe(dest('dist/assets'))
+}
+
+function rewrite() {
+    const manifest = fs.readFileSync('dist/assets/rev-manifest.json');
+  
+    return src('dist/**/*.html')
+      .pipe(revRewrite({ manifest }))
+      .pipe(dest('dist'))
+}
+
+function reclean() {
+    return src('dist/assets/**/*.{css,js}', {read: false})
+      .pipe(revDistClean('dist/assets/rev-manifest.json', {keepOriginalFiles: false}))
 }
 
 function watchFiles() {
@@ -214,8 +243,9 @@ function watchFiles() {
     gulp.watch([path.watch.vendor_styles], vendorCSS);
 }
 
-const build = gulp.series(clean, fonts_otf, vendorCSS, gulp.parallel(html, css, js, images), fonts, gulp.parallel(fontstyle));
-const watch = gulp.parallel(build, watchFiles, browsersync);
+const hashes = gulp.series(revision, rewrite, reclean);
+const prod = gulp.series(clean, fonts_otf, vendorCSS, gulp.parallel(html, css, js, images), hashes, fonts, fontstyle);
+const dev = gulp.parallel(gulp.series(clean, fonts_otf, vendorCSS, gulp.parallel(html, css, js, images), fonts, fontstyle), watchFiles, browsersync);
 
 /* Export Tasks */
 exports.html = html;
@@ -224,9 +254,13 @@ exports.js = js;
 exports.fonts_otf = fonts_otf;
 exports.fontstyle = fontstyle;
 exports.vendorCSS = vendorCSS;
+exports.revision = revision;
+exports.rewrite = rewrite;
+exports.reclean = reclean;
 exports.fonts = fonts;
 exports.images = images;
 exports.clean = clean;
-exports.build = build;
-exports.watch = watch;
-exports.default = watch;
+exports.default = dev;
+exports.dev = dev;
+exports.prod = prod;
+exports.hashes = hashes;
