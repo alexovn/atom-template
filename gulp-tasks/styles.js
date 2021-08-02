@@ -1,0 +1,57 @@
+"use strict";
+
+import { path } from "../gulpfile.babel.js";
+import { src, dest } from "gulp";
+
+import postcss from "gulp-postcss";
+import plumber from "gulp-plumber";
+import autoprefixer from "autoprefixer";
+import sourcemaps from "gulp-sourcemaps";
+import rename from "gulp-rename";
+import cssnano from "cssnano";
+import concatCss from "gulp-concat-css";
+
+const browserSync = require("browser-sync").create();
+const sass = require("gulp-sass")(require("sass"));
+
+import environments from "gulp-environments"
+const development = environments.development;
+const production = environments.production;
+
+const srcPath = "#src/";
+
+function styles() {
+    return src(path.src.css, {base: srcPath + "assets/scss/"})
+        .pipe(plumber())
+        .pipe(development(sourcemaps.init()))
+        .pipe(sass({
+            errLogToConsole: true,
+            outputStyle: "expanded"
+        }))
+        .on("error", sass.logError)
+        .pipe(production(postcss([autoprefixer()])))
+        .pipe(production(dest(path.build.css)))
+        .pipe(production(postcss([autoprefixer()])))
+        .pipe(postcss([cssnano()]))
+        .pipe(rename({
+            suffix: ".min",
+            extname: ".css"
+        }))
+        .pipe(development(sourcemaps.write(".")))
+        .pipe(dest(path.build.css))
+        .pipe(browserSync.stream())
+}
+
+function vendorStyles() {
+    return src(path.src.vendorStyles, {base: srcPath + "assets/vendor/"})
+        .pipe(plumber())
+        .pipe(concatCss("vendor.bundle.css"))
+        .pipe(postcss([cssnano()]))
+        .pipe(rename({
+            suffix: ".min",
+            extname: ".css"
+        }))
+        .pipe(dest(path.build.css))
+}
+exports.styles = styles;
+exports.vendorStyles = vendorStyles;

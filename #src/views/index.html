@@ -5,11 +5,11 @@
 })
 <body>
     <div class="wrapper">
-        @@include("./partials/_header.html",{})
+        {% include './partials/_header.html' %}
         <main class="page">
-            <a href="./page.html">Link to page</a>
+            <a href="./pages/page.html">Link to page</a>
         </main>
-        @@include("./partials/_footer.html",{})
+        {% include './partials/_footer.html' %}
     </div>
     @@include("./partials/_js.html",{})
 </body>

@@ -17,13 +17,13 @@ const RevAll = require("gulp-rev-all");
 const revRewrite = require('gulp-rev-rewrite');
 const revDistClean = require('gulp-rev-dist-clean');
 
-const webphtml = require("gulp-webp-in-html");
+// const webphtml = require("gulp-webp-in-html");
 const webp = require("imagemin-webp");
 
-const sass = require("gulp-sass")(require("sass"));
+// const sass = require("gulp-sass")(require("sass"));
 const postcss = require("gulp-postcss");
-const autoprefixer = require("autoprefixer");
-const sourcemaps = require("gulp-sourcemaps");
+// const autoprefixer = require("autoprefixer");
+// const sourcemaps = require("gulp-sourcemaps");
 const cssnano = require("cssnano");
 const concatCss = require('gulp-concat-css');
 
@@ -52,86 +52,36 @@ const path = {
         css:           distPath + "assets/css/",
         images:        distPath + "assets/images/",
         fonts:         distPath + "assets/fonts/",
+        favicons:      distPath + "assets/images/favicons/",
     },
     src: {
-        html:          srcPath + "*.html",
+        html:         [srcPath + "views/**/*.html", "!" + srcPath + "/views/**/_*.html"],
         js:            srcPath + "assets/js/**/*.js",
         css:           srcPath + "assets/scss/*.scss",
-        images:        srcPath + "assets/images/**/*.{jpg,png,svg,gif,ico,webp}",
+        images:       [srcPath + "assets/images/**/*.{jpg,jpeg,png,svg,gif,ico,webp}", "!" + srcPath + "assets/images/favicon/*.{jpg,jpeg,png,gif}"],
         fonts:         srcPath + "assets/fonts/*.ttf",
-        vendor_styles: srcPath + "assets/vendor_styles/*.css",
+        vendorStyles:  srcPath + "assets/vendor/*.css",
+        favicons:      srcPath + "assets/images/favicon/*.{jpg,jpeg,png,gif}",
     },
     watch: {
         html:          srcPath + "**/*.html",
         js:            srcPath + "assets/js/**/*.js",
         css:           srcPath + "assets/scss/**/*.scss",
-        images:        srcPath + "assets/images/**/*.{jpg,png,svg,gif,ico,webp}",
-        vendor_styles: srcPath + "assets/vendor_styles/*.css",
+        images:        srcPath + "assets/images/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
+        vendorStyles:  srcPath + "assets/vendor/*.css",
     },
     clean: "./" + distPath
 };
 
+export { path };
+
 /* Tasks */
 
-function browsersync() {
-    browserSync.init({
-        server: {
-            baseDir: "./" + distPath,
-            index: 'index.html',
-        },
-        notify: false,
-        port: 5000,
-        open: false,
-    });
-}
-
-function html() {
-    return src(path.src.html, {base: srcPath})
-        .pipe(plumber())
-        .pipe(fileinclude())
-        .pipe(production(webphtml()))
-        .pipe(dest(path.build.html))
-        .pipe(browserSync.stream());
-}
-
-function css() {
-    return src(path.src.css, {base: srcPath + "assets/scss/"})
-        .pipe(plumber())
-        .pipe(development(sourcemaps.init()))
-        .pipe(sass({
-            errLogToConsole: true,
-            outputStyle: "expanded"
-        }))
-        .on("error", catchErr)
-        .pipe(production(postcss([autoprefixer()])))
-        .pipe(production(dest(path.build.css)))
-        .pipe(production(postcss([autoprefixer()])))
-        .pipe(postcss([cssnano()]))
-        .pipe(rename({
-            suffix: ".min",
-            extname: ".css"
-        }))
-        .pipe(development(sourcemaps.write(".")))
-        .pipe(dest(path.build.css))
-        .pipe(browserSync.stream())
-}
-
-function catchErr(e) {
-    console.log(e);
-    this.emit('end');
-}
-
-function vendorCSS() {
-    return src(path.src.vendor_styles, {base: srcPath + "assets/vendor_styles/"})
-        .pipe(plumber())
-        .pipe(concatCss("vendor.bundle.css"))
-        .pipe(postcss([cssnano()]))
-        .pipe(rename({
-            suffix: ".min",
-            extname: ".css"
-        }))
-        .pipe(dest(path.build.css))
-}
+import server from "./gulp-tasks/server";
+import html from "./gulp-tasks/html";
+import styles from "./gulp-tasks/styles";
+import vendorStyles from "./gulp-tasks/styles";
+import favicon from "./gulp-tasks/favicons";
 
 function js() {
     return src(path.src.js, {base: srcPath + "assets/js/"})
@@ -236,24 +186,25 @@ function reclean() {
 }
 
 function watchFiles() {
-    gulp.watch([path.watch.html], html);
-    gulp.watch([path.watch.css], css);
+    gulp.watch([path.watch.html], html.html);
+    gulp.watch([path.watch.css], styles.styles);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.images], images);
-    gulp.watch([path.watch.vendor_styles], vendorCSS);
+    gulp.watch([path.watch.vendorStyles], vendorStyles.vendorStyles);
 }
 
+const fontsBuild = gulp.series(fonts_otf, fonts, fontstyle);
 const hashes = gulp.series(revision, rewrite, reclean);
-const prod = gulp.series(clean, fonts_otf, vendorCSS, gulp.parallel(html, css, js, images), hashes, fonts, fontstyle);
-const dev = gulp.parallel(gulp.series(clean, fonts_otf, vendorCSS, gulp.parallel(html, css, js, images), fonts, fontstyle), watchFiles, browsersync);
+const prod = gulp.series(clean, fontsBuild, vendorStyles.vendorStyles, gulp.parallel(html.html, styles.styles, js, images, favicon.favicon), hashes);
+const dev = gulp.parallel(gulp.series(clean, fontsBuild, vendorStyles.vendorStyles, gulp.parallel(html.html, styles.styles, js, images, favicon.favicon)), watchFiles, server.server);
 
 /* Export Tasks */
-exports.html = html;
-exports.css = css;
+// exports.html = html;
+// exports.css = css;
 exports.js = js;
 exports.fonts_otf = fonts_otf;
 exports.fontstyle = fontstyle;
-exports.vendorCSS = vendorCSS;
+// exports.vendorCSS = vendorCSS;
 exports.revision = revision;
 exports.rewrite = rewrite;
 exports.reclean = reclean;
