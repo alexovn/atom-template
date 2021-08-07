@@ -1,16 +1,34 @@
-{% import "./partials/_components.html" as component %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Document</title>
+    <title>{{title}}</title>
     <meta name="theme-color" content="#fff">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    {% include "./partials/_favicon.html" %}
+    {% block styles %}
+    {% endblock %}
+    {% include "../partials/_favicon.html" %}
 </head>
 <body>
-    
+
+     <!-- BEGIN content -->
+     <div class="wrapper">
+        {% include '../partials/_header.html' %}
+        <main class="page">
+            {% block content %}
+            {% endblock %}
+        </main>
+        {% include '../partials/_footer.html' %}
+    </div>
+    <!-- END content -->
+
+    <!-- BEGIN scripts -->
+    {% block js %}
+    {% endblock %}
+    <!-- END scripts -->
+
 </body>
 </html>
+{% import "../partials/_components.html" as component %}

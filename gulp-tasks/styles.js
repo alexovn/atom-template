@@ -28,6 +28,7 @@ function styles() {
         .pipe(gulpif(!production, sourcemaps.init()))
         .pipe(sass({
             errLogToConsole: true,
+            includePaths: ["node_modules"],
             outputStyle: "expanded"
         }))
         .on("error", sass.logError)
@@ -43,9 +44,10 @@ function styles() {
 }
 
 function vendorStyles() {
-    return src(path.src.vendorStyles, {base: srcPath + "assets/vendor/"})
+    return src(path.src.vendorStyles, {base: srcPath + "assets/scss/libs"})
         .pipe(plumber())
-        .pipe(concatCss("vendor.bundle.css"))
+        .pipe(concatCss("vendor.bundle.css", {includePaths: ["node_modules"]}
+        ))
         .pipe(postcss([cssnano()]))
         .pipe(rename({
             suffix: ".min",

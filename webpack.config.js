@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 
 module.exports = {
+    mode: "production",
+    // devtool: 'source-map',
     optimization: {
         splitChunks: {
             cacheGroups: {
@@ -14,8 +16,8 @@ module.exports = {
         },
     },
     output: {
-        filename: '[name].bundle.js',
-        chunkFilename: '[name].bundle.js',
+        filename: '[name].bundle.min.js',
+        chunkFilename: '[name].bundle.min.js',
     },
     module: {
         rules: [

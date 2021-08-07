@@ -34,7 +34,7 @@ const path = {
         css:           srcPath + "assets/scss/*.scss",
         images:       [srcPath + "assets/images/**/*.{jpg,jpeg,png,svg,gif,ico,webp}", "!" + srcPath + "assets/images/favicon/*.{jpg,jpeg,png,gif}"],
         fonts:         srcPath + "assets/fonts/*.ttf",
-        vendorStyles:  srcPath + "assets/vendor/*.css",
+        vendorStyles:  srcPath + "assets/scss/libs/*.css",
         favicons:      srcPath + "assets/images/favicon/*.{jpg,jpeg,png,gif}",
     },
     watch: {
@@ -42,7 +42,7 @@ const path = {
         scripts:       srcPath + "assets/js/**/*.js",
         css:           srcPath + "assets/scss/**/*.scss",
         images:        srcPath + "assets/images/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
-        vendorStyles:  srcPath + "assets/vendor/*.css",
+        vendorStyles:  srcPath + "assets/scss/libs/*.css",
     },
     clean: "./" + distPath
 };

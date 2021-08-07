@@ -14,10 +14,12 @@ const production = !!argv.production;
 
 function images () {
     return src(path.src.images)
-        .pipe(gulpif(production, newer(path.build.images)))
+        .pipe(newer(path.build.images))
         .pipe(gulpif(production, imagemin([
             webp({
-                quality: 75
+                lossless: false,
+                quality: 75,
+                alphaQuality: 100
             })
         ])))
         .pipe(gulpif(production, rename({
@@ -28,7 +30,7 @@ function images () {
         .pipe(gulpif(production, newer(path.build.images)))
         .pipe(gulpif(production, imagemin([
             imagemin.gifsicle({interlaced: true}),
-            imagemin.mozjpeg({quality: 95, progressive: true}),
+            imagemin.mozjpeg({quality: 70, progressive: true}),
             imagemin.optipng({optimizationLevel: 5}),
             imagemin.svgo({
                 plugins: [
