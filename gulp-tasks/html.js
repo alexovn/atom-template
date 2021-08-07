@@ -1,15 +1,13 @@
 "use strict";
 
-import { path } from "../gulpfile.babel.js";
+import { path, srcPath } from "../gulpfile.babel.js";
 import { src, dest } from "gulp";
 
-const srcPath = "#src/";
-
 import plumber from "gulp-plumber";
-import browserSync from "browser-sync";
 import webphtml from "gulp-webp-in-html";
 import environments from "gulp-environments"
 import nunjucks from "gulp-nunjucks";
+const browserSync = require("browser-sync").create();
 
 const development = environments.development;
 const production = environments.production;

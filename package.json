@@ -4,18 +4,19 @@
   "description": "core for developing",
   "main": "index.js",
   "scripts": {
-    "dev": "gulp dev --env development",
-    "prod": "gulp prod --env production"
+    "dev": "gulp dev",
+    "prod": "gulp prod --production"
   },
   "author": "alexovn",
   "license": "ISC",
   "devDependencies": {
-    "@babel/preset-env": "^7.14.8",
+    "@babel/preset-env": "^7.15.0",
     "@babel/register": "^7.14.5",
+    "ansi-colors": "^4.1.1",
     "autoprefixer": "^10.3.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
-    "browser-sync": "^2.27.4",
+    "browser-sync": "^2.27.5",
     "cssnano": "^5.0.7",
     "del": "^6.0.0",
     "fs": "*",
@@ -26,7 +27,8 @@
     "gulp-favicons": "^3.0.0",
     "gulp-file-include": "^2.3.0",
     "gulp-fonter": "github:alexovn/gulp-fonter",
-    "gulp-hash-filename": "^3.0.0",
+    "gulp-hash-filename": "^4.0.0",
+    "gulp-if": "^3.0.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-newer": "^1.4.0",
     "gulp-nunjucks": "^5.1.0",
@@ -36,7 +38,7 @@
     "gulp-rev": "^9.0.0",
     "gulp-rev-all": "^3.0.0",
     "gulp-rev-dist-clean": "^3.1.0",
-    "gulp-rev-rewrite": "^4.0.0",
+    "gulp-rev-rewrite": "^5.0.0",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-ttf2woff": "^1.1.1",
@@ -44,10 +46,11 @@
     "gulp-webp-in-html": "^1.0.1",
     "imagemin-webp": "^6.0.0",
     "mixitup": "^3.3.1",
-    "sass": "^1.36.0",
+    "sass": "^1.37.5",
     "uninstall": "*",
-    "webpack": "^5.46.0",
-    "webpack-stream": "^6.1.2"
+    "webpack": "^5.48.0",
+    "webpack-stream": "^6.1.2",
+    "yargs": "^17.1.0"
   },
   "browserslist": [
     "defaults",
@@ -55,13 +58,13 @@
   ],
   "dependencies": {
     "@fancyapps/fancybox": "^3.5.7",
-    "@fortawesome/fontawesome-free": "^5.15.3",
-    "caniuse-lite": "^1.0.30001247",
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "caniuse-lite": "^1.0.30001249",
     "glider-js": "^1.7.7",
     "jquery": "^3.6.0",
     "lazysizes": "^5.3.2",
-    "rfs": "^9.0.4",
+    "rfs": "^9.0.5",
     "scroll-lock": "^2.1.5",
-    "swiper": "^6.8.0"
+    "swiper": "^6.8.1"
   }
 }

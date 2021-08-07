@@ -1,19 +1,7 @@
-const webpack = require('webpack'); 
-const TerserPlugin = require("terser-webpack-plugin");
+const webpack = require('webpack');
 
 module.exports = {
-    mode: "production",
     optimization: {
-        minimizer: [
-            new TerserPlugin({
-                terserOptions: {
-                    format: {
-                        comments: false,
-                    },
-                },
-                extractComments: false,
-            }),
-        ],
         splitChunks: {
             cacheGroups: {
                 vendorJS: {
@@ -26,8 +14,8 @@ module.exports = {
         },
     },
     output: {
-        filename: '[name].bundle.min.js',
-        chunkFilename: '[name].bundle.min.js',
+        filename: '[name].bundle.js',
+        chunkFilename: '[name].bundle.js',
     },
     module: {
         rules: [
