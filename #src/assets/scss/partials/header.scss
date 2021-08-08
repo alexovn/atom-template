@@ -1,7 +1,9 @@
 .header {
     &__title {
+        position: relative;
+        font-family: 'Courier New', Courier, monospace;
         font-size: 20px;
-        color: red;
+        color: #e67e22;
         text-decoration: underline;
     }
 }
