@@ -3,6 +3,7 @@
 import { path, srcPath } from "../gulpfile.babel.js";
 import { src, dest } from "gulp";
 import gulp from "gulp";
+import c from 'ansi-colors';
 
 import fs from "fs";
 import plumber from "gulp-plumber";
@@ -51,6 +52,8 @@ function fontstyle(cb) {
 				}
 			}
 		})
+	} else {
+		console.log(c.yellow.bold.underline("fonts.scss has a data"))
 	}
 	cb()
 }

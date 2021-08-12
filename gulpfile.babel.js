@@ -3,15 +3,15 @@
 import gulp from 'gulp';
 
 import yargs from 'yargs';
-import color from 'ansi-colors';
+import c from 'ansi-colors';
 
 const argv = yargs.argv;
 const production = !!argv.production;
 
 if (production) {
-  console.log(color.green.bold.underline('🚚 Production mode'));
+    console.log(c.bgRed.black('Production mode'));
 } else {
-  console.log(color.yellow.bold.underline('🔧 Development mode'));
+    console.log(c.bgRed.black('Development mode'));
 }
 
 /* Paths */
@@ -21,28 +21,28 @@ const distPath = "dist/";
 
 const path = {
     build: {
-        html:          distPath,
-        scripts:       distPath + "assets/js/",
-        css:           distPath + "assets/css/",
-        images:        distPath + "assets/images/",
-        fonts:         distPath + "assets/fonts/",
-        favicons:      distPath + "assets/images/favicons/",
+        html: distPath,
+        scripts: distPath + "assets/js/",
+        css: distPath + "assets/css/",
+        images: distPath + "assets/images/",
+        fonts: distPath + "assets/fonts/",
+        favicons: distPath + "assets/images/favicons/",
     },
     src: {
-        html:         [srcPath + "views/**/*.html", "!" + srcPath + "/views/**/_*.html"],
-        scripts:       srcPath + "assets/js/**/*.js",
-        css:           srcPath + "assets/scss/*.scss",
-        images:       [srcPath + "assets/images/**/*.{jpg,jpeg,png,svg,gif,ico,webp}", "!" + srcPath + "assets/images/favicon/*.{jpg,jpeg,png,gif}"],
-        fonts:         srcPath + "assets/fonts/*.ttf",
-        vendorStyles:  srcPath + "assets/scss/libs/*.css",
-        favicons:      srcPath + "assets/images/favicon/*.{jpg,jpeg,png,gif}",
+        html: [srcPath + "views/**/*.html", "!" + srcPath + "/views/**/_*.html"],
+        scripts: srcPath + "assets/js/**/*.js",
+        css: srcPath + "assets/scss/*.scss",
+        images: [srcPath + "assets/images/**/*.{jpg,jpeg,png,svg,gif,ico,webp}", "!" + srcPath + "assets/images/favicon/*.{jpg,jpeg,png,gif}"],
+        fonts: srcPath + "assets/fonts/*.ttf",
+        vendorStyles: srcPath + "assets/scss/libs/*.css",
+        favicons: srcPath + "assets/images/favicon/*.{jpg,jpeg,png,gif}",
     },
     watch: {
-        html:          srcPath + "**/*.html",
-        scripts:       srcPath + "assets/js/**/*.js",
-        css:           srcPath + "assets/scss/**/*.scss",
-        images:        srcPath + "assets/images/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
-        vendorStyles:  srcPath + "assets/scss/libs/*.css",
+        html: srcPath + "**/*.html",
+        scripts: srcPath + "assets/js/**/*.js",
+        css: srcPath + "assets/scss/**/*.scss",
+        images: srcPath + "assets/images/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
+        vendorStyles: srcPath + "assets/scss/libs/*.css",
     },
     clean: "./" + distPath
 };
