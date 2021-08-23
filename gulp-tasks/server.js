@@ -8,6 +8,7 @@ import html from "./html";
 import styles from "./styles";
 import vendorStyles from "./styles";
 import images from "./images";
+import sprites from "./sprites";
 
 const browserSync = require("browser-sync").create();
 
@@ -26,6 +27,7 @@ function server() {
     gulp.watch([path.watch.scripts], scripts.scripts);
     gulp.watch([path.watch.images], images.images);
     gulp.watch([path.watch.vendorStyles], vendorStyles.vendorStyles);
+    gulp.watch([path.watch.sprites], sprites.sprites);
 }
 
 exports.server = server;
