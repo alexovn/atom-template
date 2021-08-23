@@ -1,7 +1,7 @@
 "use strict";
 
 import { path, distPath } from "../gulpfile.babel.js";
-import gulp from 'gulp'
+import gulp from "gulp";
 
 import scripts from "./scripts";
 import html from "./html";
@@ -22,7 +22,7 @@ function server() {
     });
 
     gulp.watch([path.watch.html], html.html);
-    gulp.watch([path.watch.css], styles.styles);
+    gulp.watch([path.watch.styles], styles.styles);
     gulp.watch([path.watch.scripts], scripts.scripts);
     gulp.watch([path.watch.images], images.images);
     gulp.watch([path.watch.vendorStyles], vendorStyles.vendorStyles);

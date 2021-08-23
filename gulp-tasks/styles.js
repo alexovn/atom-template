@@ -23,12 +23,11 @@ const production = !!argv.production;
 const srcPath = "#src/";
 
 function styles() {
-    return src(path.src.css, {base: srcPath + "assets/scss/"})
+    return src(path.src.styles)
         .pipe(plumber())
         .pipe(gulpif(!production, sourcemaps.init()))
         .pipe(sass({
             errLogToConsole: true,
-            includePaths: ["node_modules"],
             outputStyle: "expanded"
         }))
         .on("error", sass.logError)
@@ -39,21 +38,25 @@ function styles() {
             extname: ".css"
         }))
         .pipe(gulpif(!production, sourcemaps.write(".")))
-        .pipe(dest(path.build.css))
+        .pipe(dest(path.build.styles))
         .pipe(browserSync.stream())
 }
 
 function vendorStyles() {
-    return src(path.src.vendorStyles, {base: srcPath + "assets/scss/libs"})
+    return src(path.src.vendorStyles)
         .pipe(plumber())
-        .pipe(concatCss("vendor.bundle.css", {includePaths: ["node_modules"]}
-        ))
+        .pipe(sass({
+            errLogToConsole: true,
+            includePaths: ["node_modules"],
+            outputStyle: "expanded"
+        }))
+        .on("error", sass.logError)
         .pipe(postcss([cssnano()]))
         .pipe(rename({
             suffix: ".min",
             extname: ".css"
         }))
-        .pipe(dest(path.build.css))
+        .pipe(dest(path.build.styles))
 }
 
 const stylesBundle = gulp.parallel(styles, vendorStyles);

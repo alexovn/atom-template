@@ -34,9 +34,9 @@ function fonts_otf() {
 }
 
 function fontstyle(cb) {
-	let file_content = fs.readFileSync(srcPath + "assets/scss/main/fonts.scss");
+	let file_content = fs.readFileSync(srcPath + "assets/styles/main/dev/generated/_fonts.scss");
 	if (file_content == "") {
-		fs.writeFile(srcPath + "assets/scss/main/fonts.scss", "", cb);
+		fs.writeFile(srcPath + "assets/styles/main/dev/generated/_fonts.scss", "", cb);
 		return fs.readdir(path.build.fonts, function (err, items) {
 			if (err) {
 				throw err
@@ -46,14 +46,14 @@ function fontstyle(cb) {
 					let fontname = items[i].split(".");
 					fontname = fontname[0];
 					if (c_fontname != fontname) {
-						fs.appendFile(srcPath + "assets/scss/main/fonts.scss", '@include font("' + fontname + '", "' + fontname + '", "400", "normal");\r\n', cb);
+						fs.appendFile(srcPath + "assets/styles/main/dev/generated/_fonts.scss", '@include font("' + fontname + '", "' + fontname + '", "400", "normal");\r\n', cb);
 					}
 					c_fontname = fontname;
 				}
 			}
 		})
 	} else {
-		console.log(c.yellow.bold.underline("fonts.scss has a data"))
+		console.log(c.yellow.bold.underline("_fonts.scss has a data"))
 	}
 	cb()
 }
