@@ -1,4 +1,4 @@
-# gulp-atom-template
+# atom-template
 
 :godmode: "Атом - основа для разработки"
 
